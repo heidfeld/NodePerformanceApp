@@ -1,5 +1,15 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  section.wrapper.side-by-side
+    section=title_left
+      form(action="", method="get")
+        button.app-button(type="submit")
+          span Run Application
+    section=title_right
+      form(action="", method="get")
+        button.app-button(type="submit")
+          span Run Application
+
+
+
