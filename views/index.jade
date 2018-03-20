@@ -2,14 +2,22 @@ extends layout
 
 block content
   section.wrapper.side-by-side
-    section=title_left
-      form(action="", method="get")
-        button.app-button(type="submit")
-          span Run Application
-    section=title_right
-      form(action="", method="get")
-        button.app-button(type="submit")
-          span Run Application
+    section
+      h1=title_left
+      button.app-button(type="submit", id="button-algorithm")
+        span Run Application
+      br
+      div(id="div1")
+      br
+      div.loader(id="loader1")
+    section
+      h1=title_right
+      button.app-button(type="submit", id="button-request-strike")
+        span Run Application
+      br
+      div(id="div2")
+      br
+      div.loader(id="loader2")
 
 
 
