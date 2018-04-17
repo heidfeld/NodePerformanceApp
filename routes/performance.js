@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
-var User = require('../utils/db.js')
+//var User = require('../utils/db.js')
+var User = require('../utils/dijkstra_db.js')
 var dijkstra = require('../utils/dijkstra.js')
 
 router.get('/aaa', function(req, res, next) {
