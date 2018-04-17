@@ -1,24 +1,35 @@
 var express = require('express');
 var router = express.Router();
-//var User = require('../utils/db.js')
-var User = require('../utils/dijkstra_db.js')
+//var Entity = require('../utils/db.js')
+var Entity = require('../utils/dijkstra_db.js')
 var dijkstra = require('../utils/dijkstra.js')
 
-router.get('/aaa', function(req, res, next) {
-  res.json([
-      {name: 'test1', status: 'ok'},
-      {name: 'test2', status: 'ok'},
-      {name: 'test3', status: 'ok'},
-      {name: 'test4', status: 'ok'}
-      ]);
-});
-
 router.get('/', function(req, res) {
-    User.find(function (err, data) {
+    var result = Entity.find(function (err, data) {
         if (err) return console.error(err);
-        console.log(data);
+
+        var g = new Graph();
+
+        g.addVertex('A', {B: 7, C: 8});
+        g.addVertex('B', {A: 7, F: 2});
+        g.addVertex('C', {A: 8, F: 6, G: 4});
+        g.addVertex('D', {F: 8});
+        g.addVertex('E', {H: 1});
+        g.addVertex('F', {B: 2, C: 6, D: 8, G: 9, H: 3});
+        g.addVertex('G', {C: 4, F: 9});
+        g.addVertex('H', {E: 1, F: 3});
+
+// Log test, with the addition of reversing the path and prepending the first node so it's more readable
+        console.log(g.shortestPath('A', 'H').concat(['A']).reverse());
+
+
+
+
         res.json(data);
     })
+
+
+
 });
 
 module.exports = router;
