@@ -1,7 +1,9 @@
 var express = require('express');
 var router = express.Router();
+var User = require('../utils/db.js')
+var dijkstra = require('../utils/dijkstra.js')
 
-router.get('/', function(req, res, next) {
+router.get('/aaa', function(req, res, next) {
   res.json([
       {name: 'test1', status: 'ok'},
       {name: 'test2', status: 'ok'},
@@ -10,24 +12,12 @@ router.get('/', function(req, res, next) {
       ]);
 });
 
-router.get('/algorithm/1', function(req, res, next) {
-    let startTime = new Date().getTime();
-    let result = algorithmOne(100000000);
-    let duration = new Date().getTime() - startTime;
-    res.json({
-        algorithm: "Algorithm 1",
-        result: result,
-        time: new Date().toLocaleTimeString(),
-        duration: duration
-    });
+router.get('/', function(req, res) {
+    User.find(function (err, data) {
+        if (err) return console.error(err);
+        console.log(data);
+        res.json(data);
+    })
 });
-
-function algorithmOne(num){
-    let res = Math.floor((Math.random() * 1000) + 1);
-    for (let i = 0; i < num; ++i) {
-        res = res + (i/2);
-    }
-    return res;
-}
 
 module.exports = router;
