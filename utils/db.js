@@ -2,9 +2,9 @@ var mongoose = require('mongoose');
 
 mongoose.connect('mongodb://localhost/users', function(err) {
     if(err) {
-        console.log('connected to MongoDB: dijkstra', err);
+        console.log('connection problem on MongoDB: users', err);
     } else {
-        console.log('connection problem on MongoDB: dijkstra');
+        console.log('connected to MongoDB: users');
     }
 });
 
