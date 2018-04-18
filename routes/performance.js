@@ -14,7 +14,7 @@ router.get('/', function(req, res) {
            g.addVertex(item.name, item.nodes);
         });
 
-        let result = g.shortestPath('Node_2', 'Node_7').concat(['Node_2']).reverse();
+        let result = g.shortestPath('Node_2', 'Node_200').concat(['Node_2']).reverse();
 
         console.log(result);
 

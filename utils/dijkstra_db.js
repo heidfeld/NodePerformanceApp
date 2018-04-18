@@ -2,9 +2,9 @@ var mongoose = require('mongoose');
 
 mongoose.connect('mongodb://localhost/dijkstra', function(err) {
     if(err) {
-        console.log('błąd połączenia', err);
+        console.log('connected to MongoDB: dijkstra', err);
     } else {
-        console.log('połączenie udane');
+        console.log('connection problem on MongoDB: dijkstra');
     }
 });
 
@@ -14,4 +14,4 @@ var graphSchema = new mongoose.Schema({
     nodes: {type: mongoose.Schema.Types.Mixed}
 });
 
-module.exports = mongoose.model('dijkstra_nodes_10', graphSchema);
+module.exports = mongoose.model('dijkstra_nodes_1000', graphSchema);

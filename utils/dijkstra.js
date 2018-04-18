@@ -1,8 +1,3 @@
-/**
- * Basic priority queue implementation. If a better priority queue is wanted/needed,
- * this code works with the implementation in google's closure library (https://code.google.com/p/closure-library/).
- * Use goog.require('goog.structs.PriorityQueue'); and new goog.structs.PriorityQueue()
- */
 function PriorityQueue () {
     this._nodes = [];
 
@@ -23,9 +18,6 @@ function PriorityQueue () {
     };
 }
 
-/**
- * Pathfinding starts here
- */
 function Graph(){
     var INFINITY = 1/0;
     this.vertices = {};
@@ -50,21 +42,17 @@ function Graph(){
                 distances[vertex] = INFINITY;
                 nodes.enqueue(INFINITY, vertex);
             }
-
             previous[vertex] = null;
         }
 
         while(!nodes.isEmpty()) {
             smallest = nodes.dequeue();
-
             if(smallest === finish) {
                 path = [];
-
                 while(previous[smallest]) {
                     path.push(smallest);
                     smallest = previous[smallest];
                 }
-
                 break;
             }
 
@@ -83,7 +71,6 @@ function Graph(){
                 }
             }
         }
-
         return path;
     };
 }
