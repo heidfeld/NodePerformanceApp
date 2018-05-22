@@ -21,7 +21,7 @@ router.post('/dijkstra/', function(req, res) {
 });
 
 router.get('/users/id', function(req, res) {
-    UserEntity.find({ 'uuid': req.query.id }, 'name surname num birthDate uuid', function (err, data) {
+    UserEntity.findOne({ 'num': req.query.id }, function (err, data) {
         if (err) return console.error(err);
         console.log(data);
         res.json(data);
@@ -29,8 +29,8 @@ router.get('/users/id', function(req, res) {
 });
 
 router.get('/users/random', function(req, res) {
-    var randomnumber = Math.floor(Math.random() * (100000 + 1));
-    UserEntity.find({ 'num': '1' }, 'name surname num birthDate uuid', function (err, data) {
+    var randomnumber = Math.floor(Math.random() * 100000);
+    UserEntity.findOne({'num': randomnumber}, function (err, data) {
         if (err) return console.error(err);
         console.log(data);
         res.json(data);
