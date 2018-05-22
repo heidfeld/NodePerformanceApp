@@ -1,24 +1,39 @@
 var express = require('express');
 var router = express.Router();
-//var Entity = require('../utils/db.js')
-var Entity = require('../utils/dijkstra_db.js')
-var graph = require('../utils/dijkstra.js')
+var GraphEntity = require('../utils/dijkstra_db.js');
+var UserEntity = require('../utils/users_db.js');
+var graph = require('../utils/dijkstra.js');
 
 
-router.get('/', function(req, res) {
-    Entity.find(function (err, data) {
+router.post('/dijkstra/', function(req, res) {
+    GraphEntity.find(function (err, data) {
         if (err) return console.error(err);
-
         var g = new graph();
         data.forEach(function (item) {
            g.addVertex(item.name, item.nodes);
         });
-
-        let result = g.shortestPath('Node_2', 'Node_200').concat(['Node_2']).reverse();
-
+        var fromNode = req.query.fromNode;
+        var toNode = req.query.toNode;
+        var result = g.shortestPath(fromNode, toNode).concat([fromNode]).reverse();
         console.log(result);
-
         res.json(result);
+    })
+});
+
+router.get('/users/id', function(req, res) {
+    UserEntity.find({ 'uuid': req.query.id }, 'name surname num birthDate uuid', function (err, data) {
+        if (err) return console.error(err);
+        console.log(data);
+        res.json(data);
+    })
+});
+
+router.get('/users/random', function(req, res) {
+    var randomnumber = Math.floor(Math.random() * (100000 + 1));
+    UserEntity.find({ 'num': '1' }, 'name surname num birthDate uuid', function (err, data) {
+        if (err) return console.error(err);
+        console.log(data);
+        res.json(data);
     })
 });
 
