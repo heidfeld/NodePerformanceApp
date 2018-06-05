@@ -21,10 +21,15 @@ function PriorityQueue () {
 function Graph(){
     var INFINITY = 1/0;
     this.vertices = {};
+    this.iterations = 0;
 
     this.addVertex = function(name, edges){
         this.vertices[name] = edges;
     };
+
+    this.getIterations = function() {
+        return this.iterations;
+    }
 
     this.shortestPath = function (start, finish) {
         var nodes = new PriorityQueue(),
@@ -34,6 +39,7 @@ function Graph(){
             smallest, vertex, neighbor, alt;
 
         for(vertex in this.vertices) {
+            this.iterations = this.iterations+1;
             if(vertex === start) {
                 distances[vertex] = 0;
                 nodes.enqueue(0, vertex);
@@ -46,10 +52,12 @@ function Graph(){
         }
 
         while(!nodes.isEmpty()) {
+            this.iterations = this.iterations+1;
             smallest = nodes.dequeue();
             if(smallest === finish) {
                 path = [];
                 while(previous[smallest]) {
+                    this.iterations = this.iterations+1;
                     path.push(smallest);
                     smallest = previous[smallest];
                 }
@@ -61,6 +69,7 @@ function Graph(){
             }
 
             for(neighbor in this.vertices[smallest]) {
+                this.iterations = this.iterations+1;
                 alt = distances[smallest] + this.vertices[smallest][neighbor];
 
                 if(alt < distances[neighbor]) {

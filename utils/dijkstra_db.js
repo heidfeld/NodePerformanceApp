@@ -14,4 +14,4 @@ var graphSchema = new mongoose.Schema({
     nodes: {type: mongoose.Schema.Types.Mixed}
 });
 
-module.exports = mongoose.model('dijkstra_nodes_1000', graphSchema);
+module.exports = mongoose.model('dijkstra_nodes_3000', graphSchema);
