@@ -3,6 +3,7 @@ var router = express.Router();
 var GraphEntity = require('../utils/dijkstra_db.js');
 //var UserEntity = require('../utils/users_db.js');
 var graph = require('../utils/dijkstra.js');
+var fs = require('fs');
 
 
 router.post('/dijkstra/', function(req, res) {
@@ -38,5 +39,16 @@ router.get('/users/id', function(req, res) {
         res.json(data);
     })
 });*/
+
+router.get('/users/sequence', function(req, res) {
+    const filename = 'public/file.txt';
+    fs.readFile(filename, 'utf8', function(err, data) {
+        if (err) throw err;
+        console.log('OK: ' + filename);
+        var lines = data.split(/\r?\n/);
+        var num = Number(lines[0]);
+        res.json(num);
+    });
+});
 
 module.exports = router;
