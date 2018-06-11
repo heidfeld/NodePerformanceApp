@@ -5,6 +5,7 @@ var UserEntity = require('../utils/users_db.js');
 var graph = require('../utils/dijkstra.js');
 var fs = require('fs');
 const readline = require('readline');
+var os = require('os-utils');
 
 
 /*router.post('/dijkstra/', function(req, res) {
@@ -32,17 +33,24 @@ router.get('/users/id', function(req, res) {
     })
 });
 
-/*router.get('/users/random', function(req, res) {
+router.get('/users/random', function(req, res) {
     var randomnumber = Math.floor(Math.random() * 100000);
     UserEntity.findOne({'num': randomnumber}, function (err, data) {
         if (err) return console.error(err);
-        console.log(data);
+        const used = process.memoryUsage();
+        for (let key in used) {
+            console.log(`${key} ${Math.round(used[key] / 1024 / 1024 * 100) / 100} MB`);
+        }
+
+        os.cpuUsage(function(v){
+            console.log( 'CPU Usage (%): ' + v );
+        });
+
         res.json(data);
     })
-});*/
+});
 
 router.get('/users/sequence', function(req, res) {
-
     let userRequests = [1,2,3,4,5].map((item) => {
         return new Promise((resolve, reject) => {
             getUserAge(item, resolve, reject);
@@ -64,9 +72,19 @@ router.get('/users/sequence', function(req, res) {
     primeSieve(20000);
     primeSieve(25000);
 
+    const used = process.memoryUsage();
+    for (let key in used) {
+        console.log(`${key} ${Math.round(used[key] / 1024 / 1024 * 100) / 100} MB`);
+    }
+
+    os.cpuUsage(function(v){
+        console.log( 'CPU Usage (%): ' + v );
+    });
+
+
     var sumAge = 0;
     Promise.all(userRequests).then((result) => sumAge = result.reduce(getSum));
-    Promise.all(userRequests.concat(fileRequests)).then((values) => res.json("All values: " + values + " age sum: " + sumAge));
+    Promise.all(userRequests.concat(fileRequests)).then((values) => res.json({'values' : values, 'sumAge' : sumAge}));
 
 });
 
@@ -85,7 +103,7 @@ function primeSieve(n){
         if (i%3-1) for(var j = i; j < u; j++) a[i + j + 2*i*j] = true;
     }
     for(var i = 0; i< n; i++) !a[i] && r.push(i*2+1);
-    console.log("primes sieve: " + r.length);
+    //console.log("primes sieve: " + r.length);
     return r.length;
 }
 
@@ -93,7 +111,7 @@ function getUserAge(num, resolve, reject) {
     UserEntity.findOne({ 'num': num })
         .exec()
         .then((user) => {
-            console.log(user.age);
+            //console.log(user.age);
             resolve(user.age);
         })
         .catch((err) => {
@@ -106,7 +124,7 @@ function getNumberFromFile(filename, resolve, reject) {
     const lineReader = readline.createInterface({ input : stream });
     lineReader.on('line', line => {
         if(line.indexOf('25000') != -1 || line.indexOf('20000') != -1) {
-            console.log(line);
+            //console.log(line);
             var num = parseInt(line);
             resolve(num);
         }
